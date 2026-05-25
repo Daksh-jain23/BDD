@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Didi! 🎉</title>
+  <meta name="description" content="A special birthday surprise for the most amazing Didi!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ==================== ENTRANCE SCREEN ==================== -->
+  <div id="entrance" class="entrance">
+    <div class="entrance__content">
+      <div class="entrance__emoji">🎁</div>
+      <h1 class="entrance__title">You Have a Surprise!</h1>
+      <p class="entrance__subtitle">Someone made something special just for you...</p>
+      <button id="enter-btn" class="entrance__btn">
+        <span>Open Your Gift</span>
+        <span>✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== CONFETTI CANVAS ==================== -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ==================== MAIN WEBSITE ==================== -->
+  <main id="main-site" class="main-site hidden">
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="hero" class="hero">
+      <div class="hero__bg-shapes">
+        <div class="hero__circle hero__circle--1"></div>
+        <div class="hero__circle hero__circle--2"></div>
+        <div class="hero__circle hero__circle--3"></div>
+      </div>
+      <div class="hero__content">
+        <p class="hero__pre-title">🎉 It's Your Special Day! 🎉</p>
+        <h1 class="hero__title">
+          <span class="hero__title-line" id="hero-line-1">Happy</span>
+          <span class="hero__title-line hero__title-line--accent" id="hero-line-2">Birthday</span>
+          <span class="hero__title-line" id="hero-line-3">Didi! 🎂</span>
+        </h1>
+        <p class="hero__tagline">The most amazing person in the entire universe ✨</p>
+        <div class="hero__scroll-hint">
+          <span>Scroll down for surprises</span>
+          <div class="hero__scroll-arrow">↓</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CAKE SECTION ===== -->
+    <section id="cake-section" class="section cake-section">
+      <h2 class="section__title">🎂 Your Birthday Cake 🎂</h2>
+      <p class="section__subtitle">Blow all the candles to make a wish! 🕯️</p>
+      <div class="cake-wrapper">
+        <div class="cake" id="cake">
+          <!-- Candles -->
+          <div class="candles">
+            <div class="candle" data-candle="1">
+              <div class="flame-wrapper"><div class="flame"><div class="flame-inner"></div></div><div class="flame-glow"></div></div>
+              <div class="candle-body"></div>
+            </div>
+            <div class="candle" data-candle="2">
+              <div class="flame-wrapper"><div class="flame"><div class="flame-inner"></div></div><div class="flame-glow"></div></div>
+              <div class="candle-body"></div>
+            </div>
+            <div class="candle" data-candle="3">
+              <div class="flame-wrapper"><div class="flame"><div class="flame-inner"></div></div><div class="flame-glow"></div></div>
+              <div class="candle-body"></div>
+            </div>
+            <div class="candle" data-candle="4">
+              <div class="flame-wrapper"><div class="flame"><div class="flame-inner"></div></div><div class="flame-glow"></div></div>
+              <div class="candle-body"></div>
+            </div>
+            <div class="candle" data-candle="5">
+              <div class="flame-wrapper"><div class="flame"><div class="flame-inner"></div></div><div class="flame-glow"></div></div>
+              <div class="candle-body"></div>
+            </div>
+          </div>
+          <!-- Cake layers -->
+          <div class="cake-top">
+            <div class="cake-drip cake-drip--1"></div>
+            <div class="cake-drip cake-drip--2"></div>
+            <div class="cake-drip cake-drip--3"></div>
+            <div class="cake-drip cake-drip--4"></div>
+            <div class="cake-drip cake-drip--5"></div>
+          </div>
+          <div class="cake-layer cake-layer--1">
+            <div class="cake-decoration">
+              <span>🍓</span><span>🫐</span><span>🍓</span><span>🫐</span><span>🍓</span>
+            </div>
+          </div>
+          <div class="cake-layer cake-layer--2">
+            <div class="cake-decoration">
+              <span>✨</span><span>💖</span><span>✨</span><span>💖</span><span>✨</span>
+            </div>
+          </div>
+          <div class="cake-layer cake-layer--3">
+            <div class="cake-decoration">
+              <span>🌸</span><span>🦎</span><span>🌸</span><span>🦎</span><span>🌸</span>
+            </div>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+        <p class="cake-message hidden" id="cake-wish-msg">✨ Make a wish! It's already on its way to the stars! ✨</p>
+      </div>
+    </section>
+
+    <!-- ===== BIRTHDAY CARD SECTION ===== -->
+    <section id="card-section" class="section card-section">
+      <h2 class="section__title">💌 A Card Just For You 💌</h2>
+      <p class="section__subtitle">Click to open your birthday card!</p>
+      <div class="card-container" id="card-container">
+        <div class="birthday-card" id="birthday-card">
+          <!-- FRONT (the cover) -->
+          <div class="card-front" id="card-front">
+            <div class="card-front__content">
+              <div class="card-front__decoration">✿ ✿ ✿</div>
+              <h3>Happy Birthday!</h3>
+              <p>Click me to open 💌</p>
+              <div class="card-front__seal">💖</div>
+            </div>
+          </div>
+          <!-- INSIDE (always visible behind front) -->
+          <div class="card-inside">
+            <div class="card-inside__content">
+              <h3>Happyyyy Birthday Didi!!! 🎉🎂💖</h3>
+              <p class="card-inside__message">
+                You are honestly one of the best people in my life 🥺. 
+                Thank you for always being here for me, for helping, making everything 
+                feel easier and better 💛. To be honest, Thank you for just existing🫶. 
+                Life would be so boring without you and all our fun and crazyyy random 
+                moments 😂 and that little komodo side of you 🦎.
+              </p>
+              <p class="card-inside__message">
+                I hope this year brings you a lots of happiness, success, peace 
+                and everything that you have been wishing for ✨🌸.
+              </p>
+              <p class="card-inside__message">
+                You are not just my didi, sometimes you are my guide, my safe place, 
+                and sometimes even my bestie 🥹💞. You always understand me even when 
+                I do not say anything, and that means a lot to me 💛.
+              </p>
+              <p class="card-inside__message">
+                I really admire how strong, kind, you are ✨. how you treat everyone, 
+                how you think, You are just Supercalifragilisticexpialidocious 😄✨. 
+                I really really learn a lot from you and I always think why I am not 
+                more like you 😭.
+              </p>
+              <p class="card-inside__message">
+                Thank youuuuuuuu!!!! 💖 And also, never stop being a little crazy and 
+                fun 😂💃, because that is what makes you you ✨. Love you so much didi ❤️🫶.
+              </p>
+              <div class="card-inside__hearts">
+                <span>💖</span><span>💛</span><span>💖</span><span>💛</span><span>💖</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MESSAGE WALL SECTION ===== -->
+    <section id="message-wall" class="section message-wall-section">
+      <h2 class="section__title">💝 Words From The Heart 💝</h2>
+      <p class="section__subtitle">Tap on each card to reveal a message!</p>
+      <div class="message-grid">
+        <div class="msg-card" data-color="rose">
+          <div class="msg-card__front">
+            <span class="msg-card__emoji">🥹💞</span>
+            <span class="msg-card__label">My Person</span>
+          </div>
+          <div class="msg-card__back">
+            <p>You are my guide, my safe place, and literally the person I go to for everything 🥹💞</p>
+          </div>
+        </div>
+        <div class="msg-card" data-color="gold">
+          <div class="msg-card__front">
+            <span class="msg-card__emoji">💛</span>
+            <span class="msg-card__label">The Silent One</span>
+          </div>
+          <div class="msg-card__back">
+            <p>You always understand me even when I don't say a single word... and honestly that's a superpower 💛</p>
+          </div>
+        </div>
+        <div class="msg-card" data-color="purple">
+          <div class="msg-card__front">
+            <span class="msg-card__emoji">✨😄</span>
+            <span class="msg-card__label">Supercali-what?!</span>
+          </div>
+          <div class="msg-card__back">
+            <p>How you treat people, how you think — You are literally Supercalifragilisticexpialidocious and I will die on that hill 😄✨</p>
+          </div>
+        </div>
+        <div class="msg-card" data-color="teal">
+          <div class="msg-card__front">
+            <span class="msg-card__emoji">😭🪞</span>
+            <span class="msg-card__label">Role Model</span>
+          </div>
+          <div class="msg-card__back">
+            <p>I genuinely learn so much from you and I always wonder why can't I be more like you 😭✨</p>
+          </div>
+        </div>
+        <div class="msg-card" data-color="pink">
+          <div class="msg-card__front">
+            <span class="msg-card__emoji">😂💃</span>
+            <span class="msg-card__label">The Crazy Side</span>
+          </div>
+          <div class="msg-card__back">
+            <p>Never EVER stop being a little crazy and fun 😂💃 — that's the version of you that makes my day every single time ✨</p>
+          </div>
+        </div>
+        <div class="msg-card" data-color="coral">
+          <div class="msg-card__front">
+            <span class="msg-card__emoji">🦎🫶</span>
+            <span class="msg-card__label">Komodo Queen</span>
+          </div>
+          <div class="msg-card__back">
+            <p>That little komodo side of you? Absolutely iconic 🦎😂. Never change. Love you so much didi ❤️🫶</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BALLOON POP GAME ===== -->
+    <section id="balloon-section" class="section balloon-section">
+      <h2 class="section__title">🎈 Pop The Balloons! 🎈</h2>
+      <p class="section__subtitle">Every balloon has a hidden message inside! Pop them all!</p>
+      <div class="balloon-game" id="balloon-game">
+        <div class="balloon-area" id="balloon-area"></div>
+        <button class="balloon-reset-btn" id="balloon-reset">🎈 More Balloons!</button>
+      </div>
+    </section>
+
+    <!-- ===== SCRATCH CARD SECTION ===== -->
+    <section id="scratch-section" class="section scratch-section">
+      <h2 class="section__title">🎫 Scratch & Reveal 🎫</h2>
+      <p class="section__subtitle">Scratch the card to reveal a surprise message!</p>
+      <div class="scratch-container">
+        <div class="scratch-card" id="scratch-card">
+          <canvas id="scratch-canvas" width="320" height="200"></canvas>
+          <div class="scratch-reveal" id="scratch-reveal">
+            <p id="scratch-msg">🌟 The universe definitely knew what it was doing when it made us meet! 🌟</p>
+            <p class="scratch-sub" id="scratch-sub-msg">So grateful for you, always 💫</p>
+          </div>
+        </div>
+        <button class="scratch-reset-btn" id="scratch-reset">🔄 New Card</button>
+      </div>
+    </section>
+
+
+
+    <!-- ===== TYPEWRITER SECTION ===== -->
+    <section id="typewriter-section" class="section typewriter-section">
+      <h2 class="section__title">💌 A Letter For You 💌</h2>
+      <div class="typewriter-container">
+        <div class="letter-paper">
+          <p class="letter-greeting">Dear Didi,</p>
+          <p class="letter-body" id="typewriter-text"></p>
+          <p class="letter-sign hidden" id="letter-sign">With all my love,<br>Meerkat ❤️🫶</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONFETTI BUTTON SECTION ===== -->
+    <section id="confetti-section" class="section confetti-btn-section">
+      <h2 class="section__title">🎊 Party Time! 🎊</h2>
+      <p class="section__subtitle">Hit the button as many times as you want!</p>
+      <button class="confetti-mega-btn" id="confetti-mega-btn">
+        🎉 CONFETTI EXPLOSION 🎉
+      </button>
+      <div class="party-counter">
+        <span id="party-count">0</span> confetti bursts! 🎊
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="footer__content">
+        <p class="footer__text">Made with 💖 and lots of love</p>
+        <p class="footer__emoji-rain">
+          🎂 🎉 🎈 💖 ✨ 🌸 🦎 🎁 💛 🫶 🥳 🎊
+        </p>
+        <p class="footer__final">Happy Birthday once more, Didi! You're simply the best! 🎂✨</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

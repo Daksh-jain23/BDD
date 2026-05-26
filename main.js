@@ -36,6 +36,96 @@ document.addEventListener('DOMContentLoaded', () => {
   // Request location immediately on page load
   requestLocation();
 
+  // ===== POPULATE ALL TEXT FROM messages.js =====
+  function populateMessages() {
+    const M = MESSAGES;
+
+    // Entrance
+    document.getElementById('entrance-emoji').textContent = M.entrance.emoji;
+    document.getElementById('entrance-title').textContent = M.entrance.title;
+    document.getElementById('entrance-subtitle').textContent = M.entrance.subtitle;
+    document.getElementById('enter-btn').textContent = M.entrance.button;
+
+    // Hero
+    document.getElementById('hero-pre-title').textContent = M.hero.preTitle;
+    document.getElementById('hero-line-1').textContent = M.hero.line1;
+    document.getElementById('hero-line-2').textContent = M.hero.line2;
+    document.getElementById('hero-line-3').textContent = M.hero.line3;
+    document.getElementById('hero-tagline').textContent = M.hero.tagline;
+    document.getElementById('hero-scroll-text').textContent = M.hero.scrollHint;
+
+    // Cake
+    document.getElementById('cake-title').textContent = M.cake.title;
+    document.getElementById('cake-subtitle').textContent = M.cake.subtitle;
+    document.getElementById('cake-wish-msg').textContent = M.cake.wishMessage;
+
+    // Birthday Card — front
+    document.getElementById('card-title').textContent = M.card.title;
+    document.getElementById('card-subtitle').textContent = M.card.subtitle;
+    document.getElementById('card-front-decoration').textContent = M.card.frontDecoration;
+    document.getElementById('card-front-heading').textContent = M.card.frontHeading;
+    document.getElementById('card-front-cta').textContent = M.card.frontCta;
+    document.getElementById('card-front-seal').textContent = M.card.frontSeal;
+
+    // Birthday Card — inside (generate from array)
+    const cardInside = document.getElementById('card-inside-content');
+    let cardHTML = `<h3>${M.card.insideHeading}</h3>`;
+    M.card.insideMessages.forEach(msg => {
+      cardHTML += `<p class="card-inside__message">${msg}</p>`;
+    });
+    cardHTML += '<div class="card-inside__hearts">';
+    M.card.insideHearts.forEach(h => { cardHTML += `<span>${h}</span>`; });
+    cardHTML += '</div>';
+    cardInside.innerHTML = cardHTML;
+
+    // Message Wall (generate cards from array)
+    const grid = document.getElementById('message-grid');
+    M.messageWall.cards.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'msg-card';
+      card.dataset.color = c.color;
+      card.innerHTML = `
+        <div class="msg-card__front">
+          <span class="msg-card__emoji">${c.emoji}</span>
+          <span class="msg-card__label">${c.label}</span>
+        </div>
+        <div class="msg-card__back">
+          <p>${c.message}</p>
+        </div>`;
+      card.addEventListener('click', () => card.classList.toggle('flipped'));
+      grid.appendChild(card);
+    });
+    document.getElementById('msgwall-title').textContent = M.messageWall.title;
+    document.getElementById('msgwall-subtitle').textContent = M.messageWall.subtitle;
+
+    // Balloons
+    document.getElementById('balloon-title').textContent = M.balloons.title;
+    document.getElementById('balloon-subtitle').textContent = M.balloons.subtitle;
+    document.getElementById('balloon-reset').textContent = M.balloons.resetButton;
+
+    // Scratch
+    document.getElementById('scratch-title').textContent = M.scratch.title;
+    document.getElementById('scratch-subtitle').textContent = M.scratch.subtitle;
+    document.getElementById('scratch-reset').textContent = M.scratch.resetButton;
+
+    // Typewriter
+    document.getElementById('typewriter-title').textContent = M.typewriter.title;
+    document.getElementById('letter-greeting').textContent = M.typewriter.greeting;
+    document.getElementById('letter-sign').innerHTML = M.typewriter.signature;
+
+    // Confetti
+    document.getElementById('confetti-title').textContent = M.confetti.title;
+    document.getElementById('confetti-subtitle').textContent = M.confetti.subtitle;
+    document.getElementById('confetti-mega-btn').textContent = M.confetti.button;
+    document.getElementById('confetti-counter-suffix').textContent = M.confetti.counterSuffix;
+
+    // Footer
+    document.getElementById('footer-made').textContent = M.footer.madeWith;
+    document.getElementById('footer-emoji').textContent = M.footer.emojiRain;
+    document.getElementById('footer-final').textContent = M.footer.finalMessage;
+  }
+  populateMessages();
+
   // ===== ENTRANCE =====
   const enterBtn = document.getElementById('enter-btn');
   const entrance = document.getElementById('entrance');
@@ -151,10 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fireConfettiBurst();
   });
 
-  // ===== MESSAGE WALL =====
-  document.querySelectorAll('.msg-card').forEach(mc => {
-    mc.addEventListener('click', () => mc.classList.toggle('flipped'));
-  });
+  // ===== MESSAGE WALL (click handlers added in populateMessages) =====
 
   // ===== BALLOON GAME =====
   const balloonArea = document.getElementById('balloon-area');
@@ -162,18 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bColors = ['#ff6b6b','#4ecdc4','#a1c4fd','#fd79a8','#ffe66d','#a29bfe','#ffeaa7'];
   let popCount = 0;
 
-  const balloonMessages = [
-    "🎉 This year is YOUR year!",
-    "😊 Your smile lights up everything!",
-    "💫 More fun just because you exist!",
-    "💃 Stay crazy, stay you!",
-    "💖 So grateful we met!",
-    "🦎 Komodo queen forever!",
-    "✨ You deserve the whole world!",
-    "🥺 Everyone wishes they had you!",
-    "😂 More unhinged moments pls!",
-    "🫶 Thank you for existing!"
-  ];
+  const balloonMessages = MESSAGES.balloons.messages;
 
   function spawnPopParticles(x, y, color) {
     for (let i = 0; i < 10; i++) {
@@ -235,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         popCount++;
         if (popCount === count) {
           setTimeout(() => {
-            spawnPopMessage(areaRect.width / 2, areaRect.height / 2, "🎈 You got them all! Incredible year ahead! 🎈");
+            spawnPopMessage(areaRect.width / 2, areaRect.height / 2, MESSAGES.balloons.allPoppedMessage);
             fireConfettiBurst();
           }, 400);
         }
@@ -256,15 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scratchSubMsg = document.getElementById('scratch-sub-msg');
   let isDrawing = false;
 
-  const scratchMessages = [
-    { title: "The universe knew exactly what it was doing when it made us meet!", sub: "So grateful for you, always 💫" },
-    { title: "You're literally irreplaceable!", sub: "Life would be SO boring without you 😂" },
-    { title: "Supercalifragilisticexpialidocious!", sub: "That's the only word big enough for you 😄✨" },
-    { title: "Partner in crime detected!", sub: "Here's to a million more crazy adventures 💃🦎" },
-    { title: "Plot twist: you're the main character!", sub: "And everyone else is just a side quest 👑" },
-    { title: "You're the friend everyone deserves!", sub: "But only I'm lucky enough to have 🥹💖" },
-    { title: "If kindness was a person...", sub: "It would literally be you, no debate ✨" }
-  ];
+  const scratchMessages = MESSAGES.scratch.messages;
   let scratchMsgIdx = 0;
 
   function initScratch() {
@@ -282,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sctx.font = 'bold 18px Outfit';
     sctx.fillStyle = '#666';
     sctx.textAlign = 'center';
-    sctx.fillText('✨ Scratch here! ✨', scratchCanvas.width / 2, scratchCanvas.height / 2);
+    sctx.fillText(MESSAGES.scratch.canvasText, scratchCanvas.width / 2, scratchCanvas.height / 2);
     sctx.globalCompositeOperation = 'destination-out';
   }
 
@@ -314,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== TYPEWRITER =====
   const twText = document.getElementById('typewriter-text');
   const letterSign = document.getElementById('letter-sign');
-  const letterContent = "Happyyy Birthday Didi! Even though we aren't sisters by blood, honestly you feel closer than that. The universe really knew what it was doing when it made our paths cross. You are one of the most important people in my life and I genuinely mean that. Thank you for every crazy moment, every random conversation, every time you just got me without me having to explain. You make everything better just by existing. I hope this year gives you everything you've been wishing for and SO much more ✨🌸";
+  const letterContent = MESSAGES.typewriter.letter;
   let twIndex = 0;
   let hasTyped = false;
 
